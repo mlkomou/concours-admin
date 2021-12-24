@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+}
+.concoursImage {
+    width: 100px;
+    height: 100px;
+}
+.resultStateSuccess {
+    height: 20px;
+    width: 100%;
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
+.resultStateDanger {
+    height: 20px;
+    width: 100%;
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+}
