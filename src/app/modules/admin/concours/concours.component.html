@@ -84,15 +84,28 @@
                             </button>
 
                             <button
-                                (click)="addResultat(con)"
+                                matTooltip="Publier résultat"
+                                (click)="addResultat(con, 'resultat')"
                                 class="ml-4 px-1 sm:px-4 min-w-10 btnSave"
                                 mat-flat-button
                                 [color]="'primary'"
                             >
-                                <span class="hidden sm:inline-block ml-2">Publier le résultat</span>
+<!--                                <span class="hidden sm:inline-block ml-2">Publier le résultat</span>-->
                                 <mat-icon
                                     class="icon-size-5"
                                     [svgIcon]="'heroicons_solid:chart-bar'"></mat-icon>
+                            </button>
+                            <button
+                                matTooltip="Vérifier dossiers"
+                                (click)="addResultat(con, 'dossier')"
+                                class="ml-4 px-1 sm:px-4 min-w-10 btnSave"
+                                mat-flat-button
+                                [color]="'primary'"
+                            >
+<!--                                <span class="hidden sm:inline-block ml-2">Vérifier les dossiers</span>-->
+                                <mat-icon
+                                    class="icon-size-5"
+                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
                             </button>
                         </div>
                     </div>

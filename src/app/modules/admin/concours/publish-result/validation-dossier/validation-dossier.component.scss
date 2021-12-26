@@ -1,7 +1,15 @@
 table {
     width: 100%;
 }
-.dossierState {
+.mat-checkbox .mat-checkbox-frame {
+    transform: scale(4);
+}
+
+.mat-checkbox-checked .mat-checkbox-background {
+    transform: scale(4);
+}
+
+.docState {
     height: 20px;
     width: 25%;
     color: white;
@@ -9,16 +17,10 @@ table {
     text-align: center;
     margin-left: 20px;
 }
-.attente {
-    background-color: orange;
-}
-.valide {
+.docAccepted {
     background-color: green;
 }
 
-.rejet {
+.docRejected {
     background-color: red;
-}
-.folderBtn, .dossierState {
-    display: inline-block;
 }

@@ -29,4 +29,12 @@ export class ResultatService {
         form.append('id', id.toString());
         return this.http.post<MyResponse>(this.apiUrl + "change-visibiliy", form);
     }
+
+    getPostulantByResultat(page: number, size: number, resultatId: number): Observable<MyResponse> {
+        let form: FormData = new FormData();
+        form.append('page', page.toString());
+        form.append('size', size.toString());
+        form.append('resultatId', resultatId.toString());
+        return this.http.post<MyResponse>(this.apiUrl + "liste-by-resultat", form);
+    }
 }

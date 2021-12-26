@@ -54,10 +54,11 @@ export class ConcoursComponent implements OnInit {
         this.openDialog(AddConcoursComponent, null);
     }
 
-    addResultat(concours): void {
+    addResultat(concours, element): void {
         let nav: NavigationExtras = {
             queryParams: {
-                concours: JSON.stringify(concours)
+                concours: JSON.stringify(concours),
+                element: element
             }
         };
         this.router.navigate(['concours/publish-result'], nav);
@@ -78,7 +79,7 @@ export class ConcoursComponent implements OnInit {
                 this.getConcours(event.pageIndex, event.pageSize);
                 console.log('The dialog was closed', event);
             } else {
-                this.getConcours(0, 6);
+                this.getConcours(0, 15);
             }
         });
     }
@@ -103,7 +104,7 @@ export class ConcoursComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.getConcours(0, 6);
+        this.getConcours(0, 15);
     }
 
 

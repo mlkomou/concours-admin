@@ -3,6 +3,7 @@ import {ResultatService} from "../services/resultat.service";
 import {Resultst} from "../model/resultst";
 import {ConcoursService} from "../services/concours.service";
 import {ToastrService} from "ngx-toastr";
+import {NavigationExtras, Router} from "@angular/router";
 
 
 @Component({
@@ -17,10 +18,12 @@ export class ResultatComponent implements OnInit {
     totalElements: number = 0;
   constructor(private resultatService: ResultatService,
               private concoursService: ConcoursService,
-              private tostService: ToastrService) { }
+              private tostService: ToastrService,
+              private router: Router) { }
 
   ngOnInit(): void {
-      this.getResultats(0, 2);
+      this.getResultats(0, 50);
+      // localStorage.removeItem("paginationResultHistorique")
   }
     makeImageUrl(path: string) {
         return this.concoursService.makeDownloadUrl(path);
@@ -47,7 +50,7 @@ export class ResultatComponent implements OnInit {
                     let event = JSON.parse(localStorage.getItem("paginationResultHistorique"));
                     this.getResultats(event.pageIndex, event.pageSize);
                 } else {
-                    this.getResultats(0, 2);
+                    this.getResultats(0, 50);
                 }
                 this.tostService.success(res.message);
             } else {
@@ -65,8 +68,15 @@ export class ResultatComponent implements OnInit {
     getPage(event) {
         console.log(event);
         localStorage.setItem("paginationResultHistorique", JSON.stringify(event));
-        // pageIndex: 1
-        // pageSize: 2
         this.getResultats(event.pageIndex, event.pageSize);
+    }
+
+    goToListePostulant(resultat: Resultst) {
+      let nav: NavigationExtras = {
+          queryParams: {
+              resultat: JSON.stringify(resultat)
+          }
+      };
+      this.router.navigate(['resultat/liste-postulant'], nav);
     }
 }

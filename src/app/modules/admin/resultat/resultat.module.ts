@@ -10,17 +10,23 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import { ListePostulantComponent } from './liste-postulant/liste-postulant.component';
+import {FormsModule} from "@angular/forms";
 
 const routes: Route[] = [
     {
         path     : '',
         component: ResultatComponent
-    }
+    },   {
+        path     : 'liste-postulant',
+        component: ListePostulantComponent
+    },
 ];
 
 @NgModule({
   declarations: [
-    ResultatComponent
+    ResultatComponent,
+    ListePostulantComponent
   ],
     imports: [
         CommonModule,
@@ -32,7 +38,8 @@ const routes: Route[] = [
         MatSlideToggleModule,
         MatPaginatorModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        FormsModule
     ]
 })
 export class ResultatModule { }

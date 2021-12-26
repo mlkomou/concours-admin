@@ -23,6 +23,7 @@ import {FuseAlertModule} from "../../../../@fuse/components/alert";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { PublishResultComponent } from './publish-result/publish-result.component';
 import {MatTableModule} from "@angular/material/table";
+import { ValidationDossierComponent } from './publish-result/validation-dossier/validation-dossier.component';
 
 const routes: Route[] = [
     {
@@ -31,6 +32,9 @@ const routes: Route[] = [
     },   {
         path     : 'publish-result',
         component: PublishResultComponent
+    }, {
+        path     : 'validation-dossier',
+        component: ValidationDossierComponent
     },
 ];
 
@@ -38,7 +42,8 @@ const routes: Route[] = [
   declarations: [
     ConcoursComponent,
     AddConcoursComponent,
-    PublishResultComponent
+    PublishResultComponent,
+    ValidationDossierComponent
   ],
     imports: [
         CommonModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {Concours} from "../../model/concours";
 import {PostulationService} from "../../services/postulation.service";
 import {Postulation} from "../../model/postulation";
@@ -23,20 +23,23 @@ export class PublishResultComponent implements OnInit {
     resultatPostulant: ResultatPostulant = new ResultatPostulant();
     resultatName: string;
     isPublish: boolean = false;
+    element: string;
 
-    displayedColumns: string[] = ['action', 'prenom', 'nom', 'telephone'];
+    displayedColumns: string[] = ['prenom', 'nom', 'telephone', 'action'];
 
   constructor(private route: ActivatedRoute,
               private postulationService: PostulationService,
               private resultatService: ResultatService,
               private toastr: ToastrService,
-              private location: Location
+              private location: Location,
+              private router: Router
               ) { }
 
     getDataByRouting() {
       this.route.queryParams.subscribe((query) => {
           this.concours = JSON.parse(query.concours);
           if (this.concours) {
+              this.element = query.element;
               this.getPostulations(0, 15, this.concours.id);
           }
       });
@@ -44,10 +47,10 @@ export class PublishResultComponent implements OnInit {
 
     getPostulations(page: number, size: number, concoursId: number) {
       this.postulationService.getPostulationsByConcours(concoursId, page, size).subscribe((res) => {
-
           if (res.code == 100) {
               this.postulations = res.response.content;
               this.totalElements = res.response.totalElements;
+              console.log("postulations", this.postulations);
           }
       });
     }
@@ -101,5 +104,14 @@ export class PublishResultComponent implements OnInit {
             this.isPublish = false;
             this.toastr.success("Ce résultat n'est pas pulié !", 'Publication échouée !');
         }));
+    }
+
+    goToValidation(postulation) {
+      let nav: NavigationExtras = {
+          queryParams: {
+              postulation: JSON.stringify(postulation)
+          }
+      }
+      this.router.navigate(['concours/validation-dossier'], nav);
     }
 }

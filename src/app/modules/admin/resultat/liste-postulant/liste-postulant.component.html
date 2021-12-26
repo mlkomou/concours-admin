@@ -6,27 +6,27 @@
         <div class="flex-1 min-w-0">
             <div class="mt-2">
                 <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
-                  Publication du résultat pour {{concours?.name}}
+                    Liste des admis pour {{resultat?.name}}
                 </h2>
             </div>
         </div>
 
 
-        <div class="flex items-center">
-            <button
-                (click)="publishResult()"
-                [disabled]="!resultatName || (admisArr.length == 0)"
-                class="ml-4 px-1 sm:px-4 min-w-10"
-                mat-flat-button
-                [color]="'primary'"
-            >
-                <mat-icon
-                    class="icon-size-5"
-                    [svgIcon]="'heroicons_solid:save'"></mat-icon>
-                <span class="hidden sm:inline-block ml-2">Publiez le résultat</span>
-                <mat-spinner [diameter]="20" *ngIf="isPublish == true"></mat-spinner>
-            </button>
-        </div>
+<!--        <div class="flex items-center">-->
+<!--            <button-->
+<!--                (click)="publishResult()"-->
+<!--                [disabled]="!resultatName || (admisArr.length == 0)"-->
+<!--                class="ml-4 px-1 sm:px-4 min-w-10"-->
+<!--                mat-flat-button-->
+<!--                [color]="'primary'"-->
+<!--            >-->
+<!--                <mat-icon-->
+<!--                    class="icon-size-5"-->
+<!--                    [svgIcon]="'heroicons_solid:save'"></mat-icon>-->
+<!--                <span class="hidden sm:inline-block ml-2">Publiez le résultat</span>-->
+<!--                <mat-spinner [diameter]="20" *ngIf="isPublish == true"></mat-spinner>-->
+<!--            </button>-->
+<!--        </div>-->
     </div>
 
 
@@ -41,20 +41,30 @@
                 <mat-form-field style="width: 100%" class="fuse-mat-rounded fuse-mat-dense fuse-mat-no-subscript flex-auto ml-4 lg:ml-0">
                     <mat-icon
                         class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:chart-bar'"
+                        [svgIcon]="'heroicons_solid:search'"
                         matPrefix></mat-icon>
                     <input
                         style="width: 100%"
                         matInput
-                        [(ngModel)]="resultatName"
+                        [(ngModel)]="searchTerm"
                         [autocomplete]="'off'"
-                        [placeholder]="'Insérez le titre du résultat ici...'"
+                        [placeholder]="'Recherche...'"
 
                         #searchInput>
                 </mat-form-field>
             </div>
-            <table mat-table [dataSource]="postulations" class="mat-elevation-z8">
-
+            <table mat-table [dataSource]="resultats" class="mat-elevation-z8">
+                <!-- Position Column -->
+<!--                <ng-container matColumnDef="action">-->
+<!--                    <th mat-header-cell *matHeaderCellDef>-->
+<!--                        Cochez les admis-->
+<!--                    </th>-->
+<!--                    <td mat-cell *matCellDef="let element">-->
+<!--                        <section class="example-section">-->
+<!--                            <mat-checkbox (change)="getCheckValue($event, element)" [checked]="checkPostulantChecked(element)" color="primary" class="example-margin"></mat-checkbox>-->
+<!--                        </section>-->
+<!--                    </td>-->
+<!--                </ng-container>-->
 
                 <ng-container matColumnDef="prenom">
                     <th mat-header-cell *matHeaderCellDef> Prénom</th>
@@ -67,35 +77,10 @@
                     <td mat-cell *matCellDef="let element"> {{element.postulant.nom}} </td>
                 </ng-container>
 
+                <!-- Weight Column -->
                 <ng-container matColumnDef="telephone">
                     <th mat-header-cell *matHeaderCellDef> Téléphone </th>
                     <td mat-cell *matCellDef="let element"> {{element.postulant.telephone}} </td>
-                </ng-container>
-
-                <ng-container *ngIf="element == 'resultat'" matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Cochez les admis
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <section class="example-section">
-                            <mat-checkbox (change)="getCheckValue($event, element)" [checked]="checkPostulantChecked(element)" color="primary" class="example-margin"></mat-checkbox>
-                        </section>
-                    </td>
-                </ng-container>
-
-                <ng-container *ngIf="element == 'dossier'" matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>
-                        Dossier
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <button (click)="goToValidation(element)" class="folderBtn" mat-icon-button color="primary" matTooltip="Vérifier dossier">
-                            <mat-icon [svgIcon]="'heroicons_solid:folder'"></mat-icon>
-                        </button>
-
-                        <div class="dossierState" [ngClass]=" {'attente': element.validation == 'ATTENTE', 'valide': element.validation == 'VALIDÉ', 'rejet': element.validation == 'REJETTÉ'}">
-                            {{element.validation}}
-                        </div>
-                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

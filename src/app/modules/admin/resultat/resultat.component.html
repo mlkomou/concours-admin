@@ -85,7 +85,7 @@
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
                     <td mat-cell *matCellDef="let element">
                         <mat-slide-toggle matTooltip="Activer/Désactiver" style="margin-left: 15px;" color="primary" [checked]="element.visibily"  (change)="toggle($event, element.id)"></mat-slide-toggle>
-                        <button matTooltip="Voir les détails" mat-icon-button color="primary">
+                        <button (click)="goToListePostulant(element)" matTooltip="Voir les détails" mat-icon-button color="primary">
                             <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
                         </button>
                     </td>

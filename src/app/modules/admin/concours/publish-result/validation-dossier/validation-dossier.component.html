@@ -1,0 +1,104 @@
+
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+        <div class="flex-1 min-w-0">
+            <div class="mt-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight leading-7 sm:leading-10 truncate">
+                    Vérification des dossiers de  {{postulation?.postulant.prenom }} {{postulation?.postulant.nom}} <br>
+                    Pour le concours {{postulation?.concours.name}}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex-auto p-6 sm:p-10">
+        <div class="flex flex-wrap items-start w-full max-w-400 -m-4">
+            <table mat-table [dataSource]="docs" [multiTemplateDataRows]="true" [trackBy]="trackByFn" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nom du dossier</th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type du fichier </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="accepted">
+                    <th mat-header-cell *matHeaderCellDef> Etat du dossier </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div [innerHTML]="element.accepted == true ? 'ACCEPTÉ' : 'REJETTÉ'" class="docState" [ngClass]="element.accepted == true ? 'docAccepted' : 'docRejected'"></div>
+                    </td>
+                </ng-container>
+
+                <ng-container  matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Action
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <button
+                            matTooltip="Ouvrir vérification section"
+                            class="min-w-10 min-h-7 h-7 px-2 leading-6"
+                            mat-stroked-button
+                            (click)="toggleDetails(element)">
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="selectedDoc?.id === element.id ? 'heroicons_solid:chevron-up' : 'heroicons_solid:chevron-down'"></mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="detailDoc">
+                    <td [attr.colspan]="displayedColumns.length" mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="selectedDoc?.id === element.id">
+                            <ng-container *ngTemplateOutlet="rowDetailsTemplate; context: {$implicit: element}"></ng-container>
+                        </ng-container>
+                    </td>
+
+                    <ng-template
+                        #rowDetailsTemplate
+                        let-element>
+                        <div
+                            class="shadow-lg overflow-hidden"
+                            [@expandCollapse]="selectedDoc?.id === element.id ? 'expanded' : 'collapsed'">
+
+                            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between p-6 sm:py-8 sm:px-10 border-b bg-card dark:bg-transparent">
+                                <div class="flex-1 min-w-0">
+                                    <div class="mt-2">
+                                        <mat-checkbox matTooltip="Cochez pour accepter" (change)="getCheckValue($event, element)" [checked]="checkPostulantChecked(element)" color="primary" class="example-margin"></mat-checkbox>
+                                    </div>
+                                </div>
+
+
+                                <div class="flex items-center">
+                                    <div style="height: 600px; width: 100%; overflow: scroll;" class="flex items-center flex-auto">
+                                        <img *ngIf="(element.type == 'image/jpeg') || (element.type == 'image/jpg') || (element.type == 'image/png') " [src]="makeDownloadUrl(element.path)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr
+                    class="h-0"
+                    mat-row
+                    *matRowDef="let row; columns: ['detailDoc']"></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
