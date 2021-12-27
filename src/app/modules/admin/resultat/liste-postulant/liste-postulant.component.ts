@@ -5,6 +5,7 @@ import {Postulation} from "../../model/postulation";
 import {ResultatService} from "../../services/resultat.service";
 import {ToastrService} from "ngx-toastr";
 import {Location} from "@angular/common";
+import {ExcelService} from "../../services/excel.service";
 
 @Component({
   selector: 'app-liste-postulant',
@@ -22,17 +23,31 @@ export class ListePostulantComponent implements OnInit {
     totalElements: number = 0;
     searchTerm: string;
     isPublish: boolean = false;
+    jsonToExport: any[] = [];
 
     displayedColumns: string[] = ['prenom', 'nom', 'telephone'];
 
     constructor(private route: ActivatedRoute,
                 private resultatService: ResultatService,
                 private toastr: ToastrService,
-                private location: Location
+                private location: Location,
+                private excelService: ExcelService
     ) { }
 
     ngOnInit(): void {
         this.getRoutingData();
+    }
+
+    exportAsXLSX():void {
+        this.resultats.forEach(value => {
+            this.jsonToExport.push({
+                prenom: value.postulant.prenom,
+                nom: value.postulant.nom,
+                telephone: value.postulant.telephone,
+                situation: 'admis(e)'
+            });
+        });
+        this.excelService.exportAsExcelFile(this.jsonToExport, this.resultat.name);
     }
 
     getRoutingData() {
