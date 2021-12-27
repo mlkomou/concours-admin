@@ -2,11 +2,11 @@ table {
     width: 100%;
 }
 .mat-checkbox .mat-checkbox-frame {
-    transform: scale(4);
+    transform: scale(2);
 }
 
 .mat-checkbox-checked .mat-checkbox-background {
-    transform: scale(4);
+    transform: scale(2);
 }
 
 .docState {
@@ -21,6 +21,22 @@ table {
     background-color: green;
 }
 
+.docTraitement {
+    background-color: orange;
+}
+
 .docRejected {
     background-color: red;
 }
+.zoomBtnPlus {
+    position: absolute;
+    top: 40%;
+    left: 28%;
+}
+.zoomBtnMinus {
+    position: absolute;
+    top: 40%;
+    left: 25%;
+}
+
+

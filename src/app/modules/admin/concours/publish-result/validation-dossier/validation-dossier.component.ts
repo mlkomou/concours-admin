@@ -18,9 +18,8 @@ export class ValidationDossierComponent implements OnInit {
     postulation: Postulation = new Postulation();
     docs: PostulationDoc[] = [];
     displayedColumns: string[] = ['name', 'accepted', 'type', 'action'];
-    resultatName: any;
     selectedDoc: any;
-
+    zoom: number = 0.3;
 
     constructor(private route: ActivatedRoute,
               private docsService: DocumentService,
@@ -32,6 +31,15 @@ export class ValidationDossierComponent implements OnInit {
   }
     makeDownloadUrl(path: string) {
         return this.docsService.makeDownloadUrl(path);
+    }
+    zoomPDF(action: string) {
+        if (action == 'plus') {
+            this.zoom++;
+            console.log('zoom', this.zoom);
+        } else if (action == 'minus' && this.zoom > 0.3){
+            this.zoom--;
+            console.log('zoom', this.zoom);
+        }
     }
 
     /**
@@ -65,14 +73,23 @@ export class ValidationDossierComponent implements OnInit {
   }
 
     getCheckValue(event, element) {
-        this.docsService.changeState(element.id, event.checked).subscribe((res) => {
+        if (event.checked == true) {
+            this.updateDocState(element, "ACCEPTÉ");
+        } else {
+            this.updateDocState(element, "REJETTÉ");
+        }
+
+    }
+
+    updateDocState(element, state) {
+        this.docsService.changeState(element.id, state, this.postulation.id).subscribe((res) => {
             console.log("change state", res);
             if (res.code == 100) {
                 const index = this.docs.findIndex(doc => {
                     return doc.id == element.id;
                 });
                 if (index != -1) {
-                    this.docs[index].accepted = event.checked;
+                    this.docs[index].accepted = state;
                     this.toast.success(res.message);
                 }
             } else {
@@ -90,7 +107,7 @@ export class ValidationDossierComponent implements OnInit {
         const index = this.docs.findIndex(doc => {
             return doc.id == element.id;
         });
-        return (index != -1) && (this.docs[index].accepted == true);
+        return (index != -1) && (this.docs[index].accepted == "ACCEPTÉ");
     };
 
     toggleDetails(element) {

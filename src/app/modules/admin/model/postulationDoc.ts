@@ -5,6 +5,6 @@ export class PostulationDoc {
     path: string;
     name: string;
     type: string;
-    accepted: boolean;
+    accepted: string;
     postulation: Postulation;
 }

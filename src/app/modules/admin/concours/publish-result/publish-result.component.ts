@@ -40,6 +40,7 @@ export class PublishResultComponent implements OnInit {
           this.concours = JSON.parse(query.concours);
           if (this.concours) {
               this.element = query.element;
+              console.log("element", this.element);
               this.getPostulations(0, 15, this.concours.id);
           }
       });

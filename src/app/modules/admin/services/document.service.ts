@@ -20,10 +20,11 @@ export class DocumentService {
         return this.http.post<MyResponse>(this.apiUrl + "by-postulant-concours", form);
     }
 
-    changeState(docId: number, accepted: boolean): Observable<MyResponse> {
+    changeState(docId: number, accepted: string, postulationId: number): Observable<MyResponse> {
         let form: FormData = new FormData();
         form.append("docId", docId.toString());
-        form.append("accepted", accepted.toString());
+        form.append("accepted", accepted);
+        form.append("postulationId", postulationId.toString());
         return this.http.post<MyResponse>(this.apiUrl + "chane-state", form);
     }
 

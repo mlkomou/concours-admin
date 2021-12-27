@@ -24,6 +24,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import { PublishResultComponent } from './publish-result/publish-result.component';
 import {MatTableModule} from "@angular/material/table";
 import { ValidationDossierComponent } from './publish-result/validation-dossier/validation-dossier.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Route[] = [
     {
@@ -66,7 +67,8 @@ const routes: Route[] = [
         MatProgressSpinnerModule,
         FuseAlertModule,
         MatPaginatorModule,
-        MatTableModule
+        MatTableModule,
+        PdfViewerModule
     ]
 })
 export class ConcoursModule { }
