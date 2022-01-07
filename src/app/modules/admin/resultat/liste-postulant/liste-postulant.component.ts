@@ -36,9 +36,13 @@ export class ListePostulantComponent implements OnInit {
 
     ngOnInit(): void {
         this.getRoutingData();
+
     }
 
     exportAsXLSX():void {
+        // this.resultatService.exportToExcel(this.resultat.id).subscribe((res) => {
+        //     console.log(res);
+        // })
         this.resultats.forEach(value => {
             this.jsonToExport.push({
                 prenom: value.postulant.prenom,

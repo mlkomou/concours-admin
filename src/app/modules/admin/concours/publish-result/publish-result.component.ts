@@ -103,7 +103,8 @@ export class PublishResultComponent implements OnInit {
             }
         }, (error => {
             this.isPublish = false;
-            this.toastr.success("Ce résultat n'est pas pulié !", 'Publication échouée !');
+            console.log("error", error);
+            this.toastr.error("Ce résultat n'est pas pulié !", 'Publication échouée !');
         }));
     }
 

@@ -37,4 +37,11 @@ export class ResultatService {
         form.append('resultatId', resultatId.toString());
         return this.http.post<MyResponse>(this.apiUrl + "liste-by-resultat", form);
     }
+
+    exportToExcel(resultatId: number): Observable<MyResponse> {
+        let form: FormData = new FormData();
+        form.append('resultatId', resultatId.toString());
+        return this.http.post<MyResponse>(this.apiUrl + "export-excel", form);
+    }
+
 }
